@@ -3,6 +3,7 @@ import Home from "./home";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Create from "./create";
 import BlogDetails from "./blogDetails";
+import NotFound from "./notFound";
 
 function App() {
   // Embedding expressions in JSX
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/blogs/:id">
               <BlogDetails></BlogDetails>
+            </Route>
+            <Route path="*">
+             <NotFound></NotFound>
             </Route>
           </Switch>
 

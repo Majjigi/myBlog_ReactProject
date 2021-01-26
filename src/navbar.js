@@ -3,15 +3,16 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <h1>bharath blog</h1>
-
+ 
       <div className="links">
-        <Link to="/">Home</Link>
+        <Link to="/" style={{ textDecoration: 'none' }} >Home</Link>
         <Link
           to="/create"
           style={{
             color: "white",
             backgroundColor: "#3333FF",
             borderRadius: "8px",
+            textDecoration: 'none'
           }}
         >
           New Blog

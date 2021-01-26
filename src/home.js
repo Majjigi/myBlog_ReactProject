@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BlogList from "./bloglist";
+import useFetch from "./useFetch";
 
 const Home = () => {
   //  let name="jack"
@@ -33,58 +34,22 @@ const Home = () => {
 
   // below data is fetching from json file in useEffect
 
-  const [blogs, setBlogs] = useState(null);
+  //  const [blogs, setBlogs] = useState(null);
 
-  // Conditional Loading messages
-  const [isPending, setIsPending] = useState(true);
+  // // // Conditional Loading messages
+  //  const [isPending, setIsPending] = useState(true);
 
-  // setting Error messages
-  const [error, setError] = useState(null);
+  // // // setting Error messages
+  //  const [error, setError] = useState(null);
 
-  // useEffect hook
+  const { error, isPending, data: blogs } = useFetch(
+    "http://localhost:8000/blogs"
+  );
 
-  useEffect(() => {
-    console.log("useEffect hook is running");
-    // useEffect hook automatically executes when the page is loaded and
-    // also when page is reloaded
-    console.log(blogs);
-
-    const abortCont = new AbortController();
-
-    setTimeout(() => {
-      fetch("http://localhost:8000/blogs", { signal: abortCont.signal })
-        .then((res) => {
-          if (!res.ok) {
-            throw Error("could not fetch the data from the resource");
-          }
-          console.log(res);
-          return res.json();
-        })
-        .then((data) => {
-          console.log(data);
-          setBlogs(data);
-          setIsPending(false);
-          setError(null);
-        })
-        .catch((err) => {
-          if (err.name === 'AbortError') {
-            console.log("fetch aborted");
-          } else {
-            setIsPending(false);
-            console.log(err.message);
-            setError(err.message);
-          }
-        });
-    }, 1000);
-    return () => {
-      console.log("cleared");
-      abortCont.abort(); //aborts whatever fetch it is containing
-    };
-  }, ["http://localhost:8000/blogs"]);
-  const handleDelete = (id) => {
-    const newBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(newBlogs);
-  };
+  // const handleDelete = (id) => {
+  //   const newBlogs = blogs.filter((blog) => blog.id !== id);
+  //   setBlogs(newBlogs);
+  // };
 
   return (
     <div className="home">
@@ -100,7 +65,7 @@ const Home = () => {
         <BlogList
           blogs={blogs}
           title="All Blogs!"
-          handleDelete={handleDelete}
+          // handleDelete={handleDelete}
         ></BlogList>
       )}
       {/* Functions as props  */}
